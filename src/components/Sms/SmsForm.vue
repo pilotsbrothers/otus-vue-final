@@ -70,7 +70,10 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-label>Дата добавления</v-label>
-            <v-text-field v-model="sms.created_at" :disabled="true"></v-text-field>
+            <v-text-field
+              v-model="sms.created_at"
+              :disabled="true"
+            ></v-text-field>
           </v-col>
         </v-row>
       </template>
@@ -80,9 +83,9 @@
           <v-card class="email-list">
             <v-list>
               <v-list-item
-                v-for='item in sms.list'
-                :title='item.surname + " " + item.name + " " + item.patronymic'
-                :subtitle='item.phone'
+                v-for="item in sms.list"
+                :title="item.surname + ' ' + item.name + ' ' + item.patronymic"
+                :subtitle="item.phone"
               ></v-list-item>
             </v-list>
           </v-card>
@@ -96,7 +99,9 @@
           </router-link>
         </v-col>
         <v-col v-else cols="12" md="12">
-          <v-btn-inversed rounded="0" @click="router.push({name: 'ListSms'})">Назад</v-btn-inversed>
+          <v-btn-inversed rounded="0" @click="router.push({ name: 'ListSms' })"
+            >Назад</v-btn-inversed
+          >
         </v-col>
       </v-row>
     </v-container>
@@ -104,125 +109,139 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { computed, onMounted, ref } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import gql from "graphql-tag";
-import {provideApolloClient, useQuery} from "@vue/apollo-composable";
+import { provideApolloClient, useQuery } from "@vue/apollo-composable";
 
 const props = defineProps({
   id: {
     type: Number,
-    default: null
-  }
-})
-const router = useRouter()
-const form = ref(null)
-const valid = ref(false)
+    default: null,
+  },
+});
+const router = useRouter();
+const form = ref(null);
+const valid = ref(false);
 const rules = ref({
   required: (v) =>
-    typeof v !== 'undefined' && v !== '' && v != null ? true : 'Поле обязательно для заполнения'
-})
+    typeof v !== "undefined" && v !== "" && v != null
+      ? true
+      : "Поле обязательно для заполнения",
+});
 
-const store = useStore()
+const store = useStore();
 const sms = computed(() => {
-  return store.state.sms.item
-})
+  return store.state.sms.item;
+});
 
 const canEdit = computed(() => {
-  return props.id === null
-})
+  return props.id === null;
+});
 const selectedDistricts = computed({
   get() {
-    return store.state.sms.item.district_list
+    return store.state.sms.item.district_list;
   },
   set(newValue) {
-    store.state.sms.item.district_list = newValue
-  }
-})
+    store.state.sms.item.district_list = newValue;
+  },
+});
 const selectedOrganizations = computed({
   get() {
-    return store.state.sms.item.org_list
+    return store.state.sms.item.org_list;
   },
   set(newValue) {
-    store.state.sms.item.org_list = newValue
-  }
-})
+    store.state.sms.item.org_list = newValue;
+  },
+});
 const selectedPersonRoles = computed({
   get() {
-    return store.state.sms.item.pers_role_list
+    return store.state.sms.item.pers_role_list;
   },
   set(newValue) {
-    store.state.sms.item.pers_role_list = newValue
-  }
-})
+    store.state.sms.item.pers_role_list = newValue;
+  },
+});
 const DISTRICT_QUERY = gql`
-        query {
-          districts{
-            edges {
-              node {
-                _id,
-                name
-              }
-            }
-          }
-        }`
-const query = provideApolloClient(app.apolloClient)(() => useQuery(DISTRICT_QUERY))
-const districtList = computed(() => query.result.value?.districts.edges)
+  query {
+    districts {
+      edges {
+        node {
+          _id
+          name
+        }
+      }
+    }
+  }
+`;
+const query = provideApolloClient(app.apolloClient)(() =>
+  useQuery(DISTRICT_QUERY),
+);
+const districtList = computed(() => query.result.value?.districts.edges);
 
 const ORG_QUERY = gql`
-        query {
-          organizations{
-            edges {
-              node {
-                _id,
-                shortName,
-                fullName,
-                district{
-                  _id,
-                  name
-                }
-              }
-            }
+  query {
+    organizations {
+      edges {
+        node {
+          _id
+          shortName
+          fullName
+          district {
+            _id
+            name
           }
-        }`
+        }
+      }
+    }
+  }
+`;
 
-const queryOrg = provideApolloClient(app.apolloClient)(() => useQuery(ORG_QUERY))
-const organizationList = computed(() => queryOrg.result.value?.organizations.edges)
+const queryOrg = provideApolloClient(app.apolloClient)(() =>
+  useQuery(ORG_QUERY),
+);
+const organizationList = computed(
+  () => queryOrg.result.value?.organizations.edges,
+);
 
 const ROLES_QUERY = gql`
-        query {
-          personRoles{
-            edges {
-              node {
-                _id,
-                name
-              }
-            }
-          }
-        }`
+  query {
+    personRoles {
+      edges {
+        node {
+          _id
+          name
+        }
+      }
+    }
+  }
+`;
 
-const queryRoles = provideApolloClient(app.apolloClient)(() => useQuery(ROLES_QUERY))
-const personRoleList = computed(() => queryRoles.result.value?.personRoles.edges)
-
+const queryRoles = provideApolloClient(app.apolloClient)(() =>
+  useQuery(ROLES_QUERY),
+);
+const personRoleList = computed(
+  () => queryRoles.result.value?.personRoles.edges,
+);
 
 onMounted(() => {
   if (props.id != null) {
-    store.commit('SET_LOADING', 'smsForm')
-    store.dispatch('getSmsItem', props.id).then(() => {
-      store.commit('REMOVE_LOADING', 'smsForm')
-    })
+    store.commit("SET_LOADING", "smsForm");
+    store.dispatch("getSmsItem", props.id).then(() => {
+      store.commit("REMOVE_LOADING", "smsForm");
+    });
   } else {
-    store.commit('SET_ITEM', {})
+    store.commit("SET_ITEM", {});
   }
-})
+});
 
 function submitForm() {
   if (valid.value === true) {
-    store.state.sms.item.org_list = selectedOrganizations
-    store.state.sms.item.district_list = selectedDistricts
-    store.state.sms.item.pers_role_list = selectedPersonRoles
-    store.dispatch('submitSmsForm')
+    store.state.sms.item.org_list = selectedOrganizations;
+    store.state.sms.item.district_list = selectedDistricts;
+    store.state.sms.item.pers_role_list = selectedPersonRoles;
+    store.dispatch("submitSmsForm");
   }
 }
 </script>
@@ -231,10 +250,10 @@ function submitForm() {
 .icon-img img {
   max-width: 150px;
 }
-.btn-submit{
+.btn-submit {
   margin-right: 15px;
 }
-.email-list{
+.email-list {
   margin-top: 15px;
 }
 </style>

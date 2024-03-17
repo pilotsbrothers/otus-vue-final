@@ -11,6 +11,6 @@
 }
 
 .page-content {
-  background-image: url('../assets/page-backgrd.svg');
+  background-image: url("../assets/page-backgrd.svg");
 }
 </style>

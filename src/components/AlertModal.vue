@@ -15,38 +15,38 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import store from '../store'
+import { ref, watch } from "vue";
+import store from "../store";
 
 const props = defineProps({
   alert: {
     type: Object,
-    default: null
-  }
-})
-const alertTimeToLive = ref(3500)
+    default: null,
+  },
+});
+const alertTimeToLive = ref(3500);
 
 watch(
   props.alert,
   (val) => {
     if (val && !props.alert.isPermanent) {
-      return clearAlert()
+      return clearAlert();
     }
   },
   {
     immediate: true,
-    deep: true
-  }
-)
+    deep: true,
+  },
+);
 
 function clearAlert() {
   setTimeout(() => {
-    store.dispatch('ClearAlert', props.alert.id)
-  }, alertTimeToLive.value)
+    store.dispatch("ClearAlert", props.alert.id);
+  }, alertTimeToLive.value);
 }
 
 function closeAlert() {
-  store.dispatch('ClearAlert', props.alert.id)
+  store.dispatch("ClearAlert", props.alert.id);
 }
 </script>
 

@@ -1,7 +1,7 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,14 +12,14 @@ export default defineConfig({
         additionalData: [
           // '@import "./src/styles/index";',
           //'@import "./src/styles/variables";'
-        ].join('\n')
-      }
-    }
+        ].join("\n"),
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '~': fileURLToPath(new URL('./node_modules', import.meta.url))
-    }
-  }
-})
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "~": fileURLToPath(new URL("./node_modules", import.meta.url)),
+    },
+  },
+});

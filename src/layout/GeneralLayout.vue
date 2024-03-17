@@ -8,6 +8,6 @@
 .page-content {
   width: 100vw;
   height: 100vh;
-  background-image: url('../assets/page-backgrd.svg');
+  background-image: url("../assets/page-backgrd.svg");
 }
 </style>

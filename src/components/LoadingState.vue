@@ -10,13 +10,13 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { useStore } from "vuex";
+import { computed } from "vue";
 
-const store = useStore()
+const store = useStore();
 const isLoading = computed(() => {
-  return !!Object.keys(store.state.app.loadings).length
-})
+  return !!Object.keys(store.state.app.loadings).length;
+});
 </script>
 
 <style lang="scss" scoped>

@@ -1,19 +1,19 @@
-import router from './router'
+import router from "./router";
 import store from "./store";
 
-const anonymousUserRoutesList = ['/auth']
+const anonymousUserRoutesList = ["/auth"];
 
 router.beforeEach((to, from, next) => {
-  const isAnonymousUserRoute = anonymousUserRoutesList.indexOf(to.path) !== -1
+  const isAnonymousUserRoute = anonymousUserRoutesList.indexOf(to.path) !== -1;
 
-    if (!isAnonymousUserRoute && store.state.app.isLoggedIn) {
-      //next({ path: '/' })
-      next()
+  if (!isAnonymousUserRoute && store.state.app.isLoggedIn) {
+    //next({ path: '/' })
+    next();
+  } else {
+    if (!isAnonymousUserRoute && !store.state.app.isLoggedIn) {
+      next("/auth");
     } else {
-      if(!isAnonymousUserRoute && !store.state.app.isLoggedIn){
-        next('/auth')
-      } else {
-        next()
-      }
+      next();
     }
-})
+  }
+});

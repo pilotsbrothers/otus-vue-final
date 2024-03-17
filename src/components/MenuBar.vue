@@ -11,7 +11,12 @@
         :class="item.name === route.name ? 'active' : ''"
       >
         <router-link :to="item.path">
-          <img alt width="30" height="30" :src="'/assets/icons/' + item.meta.icon + '.svg'" />
+          <img
+            alt
+            width="30"
+            height="30"
+            :src="'/assets/icons/' + item.meta.icon + '.svg'"
+          />
           <span>{{ item.title }}</span>
         </router-link>
       </li>
@@ -20,22 +25,22 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
-import { computed, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import { setSidebarMenuAvailableRoutesList } from '../utils/router'
-const store = useStore()
+import { useStore } from "vuex";
+import { computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { setSidebarMenuAvailableRoutesList } from "../utils/router";
+const store = useStore();
 const availableMenuItems = computed(() => {
-  return store.state.app.sidebar.availableRoutesList
-})
+  return store.state.app.sidebar.availableRoutesList;
+});
 
-const route = useRoute()
+const route = useRoute();
 
 onMounted(() => {
   if (!availableMenuItems.value.length) {
-    setSidebarMenuAvailableRoutesList()
+    setSidebarMenuAvailableRoutesList();
   }
-})
+});
 </script>
 
 <style scoped lang="scss">

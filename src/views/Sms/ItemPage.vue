@@ -4,11 +4,11 @@
   </section>
 </template>
 <script setup>
-import SmsForm from '../../components/Sms/SmsForm.vue'
+import SmsForm from "../../components/Sms/SmsForm.vue";
 const props = defineProps({
   id: {
     type: Number,
-    default: null
-  }
-})
+    default: null,
+  },
+});
 </script>

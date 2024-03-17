@@ -21,9 +21,14 @@
           <template #item="{ item }">
             <tr>
               <td>
-                <router-link :to="'/emails/' + item.id">{{ item.subject }}</router-link>
+                <router-link :to="'/emails/' + item.id">{{
+                  item.subject
+                }}</router-link>
               </td>
-              <td v-if="item.total_count === item.success_count"><v-chip color="green">Завершена</v-chip></td><td v-else><v-chip color="yellow">В процессе</v-chip></td>
+              <td v-if="item.total_count === item.success_count">
+                <v-chip color="green">Завершена</v-chip>
+              </td>
+              <td v-else><v-chip color="yellow">В процессе</v-chip></td>
               <td>{{ item.total_count }}</td>
               <td>{{ item.success_count }}</td>
               <td>{{ item.failed_count }}</td>
@@ -37,69 +42,69 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
-import { useStore } from 'vuex'
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
 import moment from "moment";
 
 const headers = [
   {
-    title: 'Тема письма',
-    align: 'start',
+    title: "Тема письма",
+    align: "start",
     sortable: false,
-    key: 'subject'
+    key: "subject",
   },
   {
-    title: 'Статус',
-    align: 'start',
+    title: "Статус",
+    align: "start",
     sortable: false,
-    key: 'status'
+    key: "status",
   },
   {
-    title: 'Количество получателей',
-    align: 'start',
+    title: "Количество получателей",
+    align: "start",
     sortable: false,
-    key: 'total_count'
+    key: "total_count",
   },
   {
-    title: 'Отправлено',
-    align: 'start',
+    title: "Отправлено",
+    align: "start",
     sortable: false,
-    key: 'success_count'
+    key: "success_count",
   },
   {
-    title: 'С ошибками',
-    align: 'start',
+    title: "С ошибками",
+    align: "start",
     sortable: false,
-    key: 'failed_count'
+    key: "failed_count",
   },
   {
-    title: 'Добавлено',
-    align: 'end',
+    title: "Добавлено",
+    align: "end",
     sortable: false,
-    key: 'createdAt'
-  }
-]
+    key: "createdAt",
+  },
+];
 
-const itemsPerPage = ref(100)
-const store = useStore()
+const itemsPerPage = ref(100);
+const store = useStore();
 
 const items = computed(() => {
-  return store.state.emails.items.data
-})
+  return store.state.emails.items.data;
+});
 const totalItems = computed(() => {
-  return store.state.emails.items.meta.total
-})
+  return store.state.emails.items.meta.total;
+});
 const isLoaded = computed(() => {
-  return store.state.emails.isLoaded
-})
+  return store.state.emails.isLoaded;
+});
 
 function formatDate(date) {
-  if (!date) return ''
-  return moment(date).format('DD.MM.YYYY')
+  if (!date) return "";
+  return moment(date).format("DD.MM.YYYY");
 }
 
 function loadItems({ page, itemsPerPage, sortBy }) {
-  store.dispatch('getItems', { page, itemsPerPage, sortBy })
+  store.dispatch("getItems", { page, itemsPerPage, sortBy });
 }
 </script>
 

@@ -3,7 +3,9 @@
     <div class="not-found-page__code">404</div>
     <h1 class="not-found-page__title">Страница не найдена</h1>
     <h4 class="not-found-page__link-wrap">
-      <router-link :to="{ name: 'Dashboard' }"> Вернуться на главную </router-link>
+      <router-link :to="{ name: 'Dashboard' }">
+        Вернуться на главную
+      </router-link>
     </h4>
   </div>
 </template>

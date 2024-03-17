@@ -12,29 +12,27 @@
 </template>
 
 <script setup>
-import { RouterView, useRoute } from 'vue-router'
-import {computed, onMounted} from 'vue'
-import store from './store'
-import LoadingState from './components/LoadingState.vue'
-import Alert from './components/AlertModal.vue'
+import { RouterView, useRoute } from "vue-router";
+import { computed, onMounted } from "vue";
+import store from "./store";
+import LoadingState from "./components/LoadingState.vue";
+import Alert from "./components/AlertModal.vue";
 
-const route = useRoute()
-
+const route = useRoute();
 
 const layout = computed(() => {
   if (route.name) {
-    return route.meta.layout || 'DefaultLayout'
+    return route.meta.layout || "DefaultLayout";
   }
-  return null
-})
+  return null;
+});
 
 const alertsList = computed(() => {
-  return store.state.app.alertsList
-})
+  return store.state.app.alertsList;
+});
 
 onMounted(() => {
-  store.dispatch('isAuth')
-})
-
+  store.dispatch("isAuth");
+});
 </script>
 <style scoped></style>

@@ -15,13 +15,13 @@
 </template>
 
 <script setup>
-import MenuBar from '../components/MenuBar.vue'
-import { useStore } from 'vuex'
-import HeaderBar from '../components/HeaderBar.vue'
-const store = useStore()
+import MenuBar from "../components/MenuBar.vue";
+import { useStore } from "vuex";
+import HeaderBar from "../components/HeaderBar.vue";
+const store = useStore();
 
 function toggle() {
-  store.state.app.drawer = !store.state.app.drawer
+  store.state.app.drawer = !store.state.app.drawer;
 }
 </script>
 
@@ -32,7 +32,7 @@ function toggle() {
 }
 
 .page-content {
-  background-image: url('../assets/page-backgrd.svg');
+  background-image: url("../assets/page-backgrd.svg");
   min-height: 100vh !important;
   background-size: cover;
 }
