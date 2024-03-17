@@ -1,0 +1,27 @@
+$mainColor: #00465e;
+.page-block {
+  padding: 30px;
+
+  .v-data-table {
+    background-color: #fff;
+    .v-data-table-header {
+      &__content {
+        font-weight: bold;
+      }
+    }
+  }
+  .breadcrumbs {
+    padding-top: 0;
+    padding-left: 0;
+  }
+  .toolbar-header {
+    margin-top: 20px;
+  }
+
+  h2 {
+    color: $mainColor;
+  }
+  .v-btn {
+    margin-right: 10px;
+  }
+}
