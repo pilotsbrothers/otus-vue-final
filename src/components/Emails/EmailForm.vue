@@ -125,11 +125,8 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import { useBase64 } from "@vueuse/core";
 import { useRouter } from "vue-router";
-import gql from "graphql-tag";
-import { provideApolloClient, useQuery } from "@vue/apollo-composable";
-import ListPage from "../../views/Emails/ListPage.vue";
+import { districtList, organizationList, personRoleList } from "../../utils/filters.js"
 
 const props = defineProps({
   id: {
@@ -179,67 +176,6 @@ const selectedPersonRoles = computed({
     store.state.emails.item.pers_role_list = newValue;
   },
 });
-const DISTRICT_QUERY = gql`
-  query {
-    districts {
-      edges {
-        node {
-          _id
-          name
-        }
-      }
-    }
-  }
-`;
-const query = provideApolloClient(app.apolloClient)(() =>
-  useQuery(DISTRICT_QUERY),
-);
-const districtList = computed(() => query.result.value?.districts.edges);
-
-const ORG_QUERY = gql`
-  query {
-    organizations {
-      edges {
-        node {
-          _id
-          shortName
-          fullName
-          district {
-            _id
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-
-const queryOrg = provideApolloClient(app.apolloClient)(() =>
-  useQuery(ORG_QUERY),
-);
-const organizationList = computed(
-  () => queryOrg.result.value?.organizations.edges,
-);
-
-const ROLES_QUERY = gql`
-  query {
-    personRoles {
-      edges {
-        node {
-          _id
-          name
-        }
-      }
-    }
-  }
-`;
-
-const queryRoles = provideApolloClient(app.apolloClient)(() =>
-  useQuery(ROLES_QUERY),
-);
-const personRoleList = computed(
-  () => queryRoles.result.value?.personRoles.edges,
-);
 
 onMounted(() => {
   if (props.id != null) {

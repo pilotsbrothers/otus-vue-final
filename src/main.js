@@ -8,19 +8,9 @@ import GeneralLayout from "./layout/GeneralLayout.vue";
 import Vuetify from "./plugins/vuetify";
 import "./styles/index.scss";
 import "./styles/variables.scss";
-import { DefaultApolloClient } from "@vue/apollo-composable";
-import { ApolloClient, InMemoryCache } from "@apollo/client/core";
 
-const cache = new InMemoryCache();
-
-const apolloClient = new ApolloClient({
-  cache,
-  uri: import.meta.env.VITE_BASE_URL + "api-platform/graphql",
-});
-const app = createApp({
-  setup() {
-    provide(DefaultApolloClient, apolloClient);
-  },
+export const app = createApp({
+  setup() {},
   render: () => h(App),
 })
   .use(Vuetify)
